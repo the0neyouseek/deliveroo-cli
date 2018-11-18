@@ -4,7 +4,7 @@
   "description": "An unofficial cli app for Deliveroo",
   "main": "deliveroo.js",
   "scripts": {
-    "test": "xo"
+    "test": "xo --reporter junit > .reports/js-lint-results.xml"
   },
   "repository": "the0neyouseek/deliveroo-cli",
   "author": {

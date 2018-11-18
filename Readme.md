@@ -4,6 +4,8 @@
 
 *An unofficial cli for Deliveroo*
 
+[![CircleCI](https://circleci.com/gh/the0neyouseek/deliveroo-cli.svg?style=svg)](https://circleci.com/gh/the0neyouseek/deliveroo-cli)
+
 ## Goals
 
 This cli app is a starting point, the main goal being to be able to order food using different sources (Deliveroo, Foodora, Dominos, Mcdonald, & more …) all trough one app only filling your infos (credit card, address, name …) once.
