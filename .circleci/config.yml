@@ -17,8 +17,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: 
-        name: "Lint with Xo"
-        command: npm test
+          name: "Lint with Xo"
+          command: npm test
       - store_test_results:
           path: .reports
       - store_artifacts:
