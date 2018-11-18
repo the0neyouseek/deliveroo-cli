@@ -1,0 +1,41 @@
+{
+  "name": "deliveroo-cli",
+  "version": "0.0.1",
+  "description": "An unofficial cli app for Deliveroo",
+  "main": "deliveroo.js",
+  "scripts": {
+    "test": "xo"
+  },
+  "repository": "the0neyouseek/deliveroo-cli",
+  "author": {
+    "name": "Guillaume B.",
+    "email": "gbroder@me.com",
+    "url": "https://guillaume.ninja"
+  },
+  "license": "MIT",
+  "files": [
+    "deliveroo.js"
+  ],
+  "bin": {
+    "deliveroo-cli": "deliveroo.js"
+  },
+  "keywords": [
+    "cli",
+    "deliveroo",
+    "food",
+    "app",
+    "command-line",
+    "delivery",
+    "order"
+  ],
+  "dependencies": {
+    "configstore": "^4.0.0",
+    "enquirer": "^2.0.7",
+    "moment": "^2.22.2",
+    "node-deliveroo": "git+https://github.com/the0neyouseek/node-deliveroo.git",
+    "ora": "^3.0.0"
+  },
+  "devDependencies": {
+    "xo": "^0.23.0"
+  }
+}
