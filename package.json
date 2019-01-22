@@ -31,7 +31,7 @@
   "dependencies": {
     "configstore": "^4.0.0",
     "enquirer": "^2.3.0",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "node-deliveroo": "git+https://github.com/the0neyouseek/node-deliveroo.git",
     "ora": "^3.0.0"
   },
