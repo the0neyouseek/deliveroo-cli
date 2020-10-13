@@ -29,13 +29,13 @@
     "order"
   ],
   "dependencies": {
-    "configstore": "^4.0.0",
+    "configstore": "^5.0.1",
     "enquirer": "^2.3.6",
     "moment": "^2.29.1",
     "node-deliveroo": "git+https://github.com/the0neyouseek/node-deliveroo.git",
-    "ora": "^3.4.0"
+    "ora": "^5.1.0"
   },
   "devDependencies": {
-    "xo": "^0.23.0"
+    "xo": "^0.33.1"
   }
 }
