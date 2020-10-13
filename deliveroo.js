@@ -172,15 +172,15 @@ function getAddressList() {
 				name: 'address',
 				message: 'Choose an address to deliver to :',
 				choices
-			}).then(res => {
-				if (res && res.address) {
-					if (res.address === 'back') {
+			}).then(response => {
+				if (response && response.address) {
+					if (response.address === 'back') {
 						startProcess();
-					} else if (res.address === 'new-address') {
+					} else if (response.address === 'new-address') {
 						addNewAddress();
 					} else {
 						const address = result.addresses.find(address => {
-							return address.label === res.address;
+							return address.label === response.address;
 						});
 						if (address) {
 							getAvailableRestaurantsForAddress(address);
@@ -309,14 +309,15 @@ function chooseRestaurant(restaurants) {
 	if (restaurants && restaurants.length > 0) {
 		const choices = [];
 		restaurants.forEach(restaurant => {
-			let msg = `${restaurant.name} [${restaurant.category}] `;
+			let message = `${restaurant.name} [${restaurant.category}] `;
 			for (let i = 0; i < restaurant.price_category; i++) {
-				msg += '€';
+				message += '€';
 			}
-			msg += ` (${restaurant.target_delivery_time.minutes} min)`;
+
+			message += ` (${restaurant.target_delivery_time.minutes} min)`;
 			choices.push({
 				name: restaurant.uname,
-				message: msg
+				message
 			});
 		});
 		choices.push({
@@ -443,13 +444,14 @@ function selectMenuCategorie() {
 function selectFood(foods) {
 	const choices = [];
 	foods.forEach(food => {
-		let msg = `${food.name} (${food.price}${currentRestaurant.currency_symbol})`;
+		let message = `${food.name} (${food.price}${currentRestaurant.currency_symbol})`;
 		if (food.description) {
-			msg += ` ${food.description}`;
+			message += ` ${food.description}`;
 		}
+
 		choices.push({
 			name: food.id,
-			message: msg
+			message
 		});
 	});
 	choices.push({
@@ -505,13 +507,13 @@ function addFoodToCart(food, modifiers = []) {
 				message: 'X Cancel order'
 			}
 		]
-	}).then(res => {
-		if (res && res.addMoreOrPlaceOrder) {
-			if (res.addMoreOrPlaceOrder === 'more') {
+	}).then(result => {
+		if (result && result.addMoreOrPlaceOrder) {
+			if (result.addMoreOrPlaceOrder === 'more') {
 				displayRestaurantMenu(currentRestaurant);
-			} else if (res.addMoreOrPlaceOrder === 'order') {
+			} else if (result.addMoreOrPlaceOrder === 'order') {
 				recapOrder();
-			} else if (res.addMoreOrPlaceOrder === 'cancel') {
+			} else if (result.addMoreOrPlaceOrder === 'cancel') {
 				startProcess();
 			}
 		}
@@ -523,16 +525,18 @@ function chooseModifiers(food, modifiers, index = 0) {
 	const choices = [];
 	currentMod.modifier_item_ids.forEach(modId => {
 		const item = currentRestaurant.menu.menu_items.find(i => i.id === modId && i.available);
-		let msg = item.name;
+		let message = item.name;
 		if (item.description) {
-			msg += ` (${item.description})`;
+			message += ` (${item.description})`;
 		}
+
 		if (item.price && item.price !== '0.0') {
-			msg += ` (+${item.price}${currentRestaurant.currency_symbol})`;
+			message += ` (+${item.price}${currentRestaurant.currency_symbol})`;
 		}
+
 		choices.push({
 			name: `${modId}`,
-			message: msg
+			message
 		});
 	});
 	prompt({
@@ -540,13 +544,13 @@ function chooseModifiers(food, modifiers, index = 0) {
 		name: 'mod',
 		message: `${currentMod.name} (min ${currentMod.min_selection_points} - max ${currentMod.max_selection_points})`,
 		choices
-	}).then(res => {
-		if (res &&
-			res.mod &&
-			res.mod.length >= currentMod.min_selection_points &&
-			res.mod.length <= currentMod.max_selection_points) {
+	}).then(result => {
+		if (result &&
+			result.mod &&
+			result.mod.length >= currentMod.min_selection_points &&
+			result.mod.length <= currentMod.max_selection_points) {
 			currentModifiers.push({
-				g: currentMod.id, i: res.mod.map(mod => parseInt(mod, 10))
+				g: currentMod.id, i: result.mod.map(mod => Number.parseInt(mod, 10))
 			});
 			if (index < (modifiers.length - 1)) {
 				index++;
@@ -563,10 +567,10 @@ function chooseModifiers(food, modifiers, index = 0) {
 }
 
 function choosePaymentMethod() {
-	deliveroo.getPaymentMethods(user.id).then(res => {
-		if (res && res.payment_tokens && res.payment_tokens.length > 0) {
+	deliveroo.getPaymentMethods(user.id).then(result => {
+		if (result && result.payment_tokens && result.payment_tokens.length > 0) {
 			const choices = [];
-			res.payment_tokens.forEach(paym => {
+			result.payment_tokens.forEach(paym => {
 				choices.push({
 					name: paym.id,
 					message: `${paym.payment_type} - **** **** **** ${paym.discriminator}`
@@ -617,6 +621,7 @@ function recapOrder() {
 
 	choosePaymentMethod();
 }
+
 // TODO: Write this
 function placeOrder(paymentMethod) {
 	console.log(paymentMethod);
